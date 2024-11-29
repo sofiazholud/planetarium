@@ -40,11 +40,12 @@ class ShowSessionSerializer(serializers.ModelSerializer):
         return show_session
 
 class ReservationSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()  # User name or email
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Reservation
         fields = '__all__'
+        read_only_fields = ('user',)
 
 class TicketSerializer(serializers.ModelSerializer):
     show_session = ShowSessionSerializer()
