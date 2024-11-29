@@ -24,6 +24,21 @@ class ShowSessionSerializer(serializers.ModelSerializer):
         model = ShowSession
         fields = '__all__'
 
+    def create(self, validated_data):
+        astronomy_show_data = validated_data.pop('astronomy_show')
+        planetarium_dome_data = validated_data.pop('planetarium_dome')
+
+        astronomy_show = AstronomyShow.objects.create(**astronomy_show_data)
+        planetarium_dome = PlanetariumDome.objects.create(**planetarium_dome_data)
+
+        show_session = ShowSession.objects.create(
+            astronomy_show=astronomy_show,
+            planetarium_dome=planetarium_dome,
+            **validated_data
+        )
+
+        return show_session
+
 class ReservationSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()  # User name or email
 
