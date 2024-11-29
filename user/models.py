@@ -6,6 +6,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
 )
 
+
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
 
@@ -48,4 +49,3 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
-
