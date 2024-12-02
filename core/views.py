@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.decorators import action
@@ -23,7 +24,7 @@ from .serializers import (
 class AstronomyShowViewSet(viewsets.ModelViewSet):
     queryset = AstronomyShow.objects.all()
     serializer_class = AstronomyShowSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
 
 class ShowThemeViewSet(viewsets.ModelViewSet):
@@ -42,6 +43,8 @@ class ShowSessionViewSet(viewsets.ModelViewSet):
     queryset = ShowSession.objects.all()
     serializer_class = ShowSessionSerializer
     permission_classes = [IsAuthenticated]
+
+    filter_backends = (DjangoFilterBackend,)
 
     @action(
         methods=["POST"],

@@ -28,27 +28,19 @@ class PlanetariumDomeSerializer(serializers.ModelSerializer):
 
 
 class ShowSessionSerializer(serializers.ModelSerializer):
-    astronomy_show = AstronomyShowSerializer()
-    planetarium_dome = PlanetariumDomeSerializer()
+    astronomy_show = serializers.PrimaryKeyRelatedField(
+        queryset=AstronomyShow.objects.all()
+    )
+    planetarium_dome = serializers.PrimaryKeyRelatedField(
+        queryset=PlanetariumDome.objects.all()
+    )
 
     class Meta:
         model = ShowSession
         fields = "__all__"
 
     def create(self, validated_data):
-        astronomy_show_data = validated_data.pop("astronomy_show")
-        planetarium_dome_data = validated_data.pop("planetarium_dome")
-
-        astronomy_show = AstronomyShow.objects.create(**astronomy_show_data)
-        planetarium_dome = PlanetariumDome.objects.create(**planetarium_dome_data)
-
-        show_session = ShowSession.objects.create(
-            astronomy_show=astronomy_show,
-            planetarium_dome=planetarium_dome,
-            **validated_data
-        )
-
-        return show_session
+        return ShowSession.objects.create(**validated_data)
 
 
 class ReservationSerializer(serializers.ModelSerializer):
