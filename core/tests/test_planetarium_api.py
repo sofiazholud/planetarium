@@ -1,11 +1,8 @@
 import os
-import django
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "planetarium.settings")
-import tempfile
-import os
 
-from PIL import Image
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
@@ -17,7 +14,6 @@ from core.models import (
     AstronomyShow,
     ShowSession,
     PlanetariumDome,
-    ShowTheme,
     Reservation,
 )
 from core.serializers import (

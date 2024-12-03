@@ -53,8 +53,7 @@ class ShowSessionViewSet(viewsets.ModelViewSet):
         permission_classes=[IsAuthenticated],
     )
     def reserve(self, request, pk=None):
-        show_session = self.get_object()
-
+        self.get_object()
         return Response({"message": "Ticket reserved successfully!"}, status=200)
 
 
